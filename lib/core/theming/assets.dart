@@ -2,7 +2,9 @@ class Assets {
   Assets._();
 
   // Icons
-
+  static const String deleteIcon = "assets/icons/delete 1.svg";
+  // assets
+  static const String productCartImage = "assets/images/Frame 65.png";
   // Lottie
   static const String loadingLottie = "assets/animations/loading_gray.json";
   static const String registerLottie =

@@ -12,12 +12,27 @@ import 'package:store_app/features/cart/presentation/widgets/add_to_cart_with_pr
 import 'package:store_app/features/cart/presentation/widgets/cart_quantity_widget.dart';
 import 'package:store_app/features/home/domain/entities/product_entity.dart';
 
-class ProductDetailsScreen extends StatelessWidget {
+class ProductDetailsScreen extends StatefulWidget {
   const ProductDetailsScreen({super.key, required this.entity});
   final ProductEntity entity;
 
   @override
+  State<ProductDetailsScreen> createState() => _ProductDetailsScreenState();
+}
+
+class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
+  int quantity = 1;
+
+  void _onQuantityChanged(int newQuantity) {
+    setState(() {
+      quantity = newQuantity;
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
+    double totalPrice = widget.entity.price * quantity;
+
     return Scaffold(
       appBar: AppBar(
         title: Text16(
@@ -53,14 +68,14 @@ class ProductDetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CarouselSliderWidget(imageUrls: entity.images),
+            CarouselSliderWidget(imageUrls: widget.entity.images),
             SizedBox(height: 20.h),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Expanded(
                   child: Text16(
-                    text: entity.title,
+                    text: widget.entity.title,
                     textColor: AppColors.purpleColor,
                     weight: FontWeight.w600,
                     maxLines: 2,
@@ -69,20 +84,20 @@ class ProductDetailsScreen extends StatelessWidget {
                 ),
                 SizedBox(width: 10.w),
                 Text16(
-                  text: "\$${entity.price.toStringAsFixed(2)}",
+                  text: "\$${widget.entity.price.toStringAsFixed(2)}",
                   textColor: AppColors.lightGreenColor,
                   weight: FontWeight.w600,
                 ),
               ],
             ),
             SizedBox(height: 15.h),
-            BuildInfoRow(label: "Category", value: entity.category),
-            BuildInfoRow(label: "Brand", value: entity.brand),
-            BuildInfoRow(label: "Stock", value: entity.stock.toString()),
+            BuildInfoRow(label: "Category", value: widget.entity.category),
+            BuildInfoRow(label: "Brand", value: widget.entity.brand),
+            BuildInfoRow(label: "Stock", value: widget.entity.stock.toString()),
             Row(
               children: [
                 RatingBarIndicator(
-                  rating: entity.rating,
+                  rating: widget.entity.rating,
                   itemBuilder:
                       (context, index) =>
                           Icon(Icons.star, color: AppColors.yellowColor),
@@ -90,9 +105,12 @@ class ProductDetailsScreen extends StatelessWidget {
                   itemSize: 20,
                 ),
                 SizedBox(width: 6.w),
-                Text14(text: entity.rating.toString(), textColor: Colors.black),
+                Text14(
+                  text: widget.entity.rating.toString(),
+                  textColor: Colors.black,
+                ),
                 Spacer(),
-                CartQuantityWidget(),
+                CartQuantityWidget(onQuantityChanged: _onQuantityChanged),
               ],
             ),
             SizedBox(height: 10.h),
@@ -103,7 +121,7 @@ class ProductDetailsScreen extends StatelessWidget {
             ),
             SizedBox(height: 6.h),
             ReadMoreText(
-              entity.description,
+              widget.entity.description,
               trimLines: 3,
               trimMode: TrimMode.Line,
               trimCollapsedText: ' Show more',
@@ -113,23 +131,29 @@ class ProductDetailsScreen extends StatelessWidget {
               lessStyle: TextStyle(color: AppColors.purpleColor),
             ),
             SizedBox(height: 16.h),
-            BuildInfoRow(label: "Warranty", value: entity.warrantyInformation),
+            BuildInfoRow(
+              label: "Warranty",
+              value: widget.entity.warrantyInformation,
+            ),
             BuildInfoRow(
               label: "Shipping Info",
-              value: entity.shippingInformation,
+              value: widget.entity.shippingInformation,
             ),
             BuildInfoRow(
               label: "Availability",
-              value: entity.availabilityStatus,
+              value: widget.entity.availabilityStatus,
             ),
-            BuildInfoRow(label: "Return Policy", value: entity.returnPolicy),
+            BuildInfoRow(
+              label: "Return Policy",
+              value: widget.entity.returnPolicy,
+            ),
             BuildInfoRow(
               label: "Min Order Qty",
-              value: entity.minimumOrderQuantity.toString(),
+              value: widget.entity.minimumOrderQuantity.toString(),
             ),
 
             SizedBox(height: 20.h),
-            AddToCartWithPriceWidget(),
+            AddToCartWithPriceWidget(totalPrice: totalPrice),
             SizedBox(height: 20.h),
           ],
         ),

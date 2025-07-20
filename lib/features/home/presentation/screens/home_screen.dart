@@ -15,9 +15,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  String? selectedValue;
+  String? selectedValue1;
+  String? selectedValue2;
 
-  final List<String> options = ['Option 1', 'Option 2', 'Option 3'];
+  final List<String> sortingoptions = ['category', 'brnad', 'price'];
+  final List<String> filteringoptions = ['category', 'brnad', 'price'];
 
   @override
   Widget build(BuildContext context) {
@@ -51,20 +53,20 @@ class _HomeScreenState extends State<HomeScreen> {
                 Expanded(
                   child: CustomDropDown(
                     height: 40.h,
-                    dropdownValue: selectedValue,
-                    options: options,
+                    dropdownValue: selectedValue1,
+                    options: filteringoptions,
                     hintText: "filtering by..",
-                    onChanged: (value) => setState(() => selectedValue = value),
+                    onChanged: (value) => setState(() => selectedValue1 = value),
                   ),
                 ),
                 SizedBox(width: 10.w),
                 Expanded(
                   child: CustomDropDown(
                     height: 40.h,
-                    dropdownValue: selectedValue,
-                    options: options,
+                    dropdownValue: selectedValue2,
+                    options: sortingoptions,
                     hintText: "sorting by..",
-                    onChanged: (value) => setState(() => selectedValue = value),
+                    onChanged: (value) => setState(() => selectedValue2 = value),
                   ),
                 ),
               ],

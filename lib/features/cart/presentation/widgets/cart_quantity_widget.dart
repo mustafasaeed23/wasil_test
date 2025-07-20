@@ -3,10 +3,33 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:store_app/core/theming/colors.dart';
 import 'package:store_app/core/widgets/custom_texts.dart';
 
-class CartQuantityWidget extends StatelessWidget {
-  const CartQuantityWidget({
-    super.key,
-  });
+class CartQuantityWidget extends StatefulWidget {
+  final ValueChanged<int> onQuantityChanged;
+
+  const CartQuantityWidget({super.key, required this.onQuantityChanged});
+
+  @override
+  State<CartQuantityWidget> createState() => _CartQuantityWidgetState();
+}
+
+class _CartQuantityWidgetState extends State<CartQuantityWidget> {
+  int quantity = 1;
+
+  void _increment() {
+    setState(() {
+      quantity++;
+    });
+    widget.onQuantityChanged(quantity);
+  }
+
+  void _decrement() {
+    if (quantity > 1) {
+      setState(() {
+        quantity--;
+      });
+      widget.onQuantityChanged(quantity);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -20,11 +43,18 @@ class CartQuantityWidget extends StatelessWidget {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Icon(Icons.add_circle, color: Colors.white),
-          Text12(text: "1"),
-          Icon(Icons.remove_circle, color: Colors.white),
+          GestureDetector(
+            onTap: _increment,
+            child: Icon(Icons.add_circle, color: Colors.white),
+          ),
+          Text12(text: "$quantity"),
+          GestureDetector(
+            onTap: _decrement,
+            child: Icon(Icons.remove_circle, color: Colors.white),
+          ),
         ],
       ),
     );
   }
 }
+
