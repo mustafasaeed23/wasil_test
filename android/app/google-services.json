@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "86256742736",
+    "project_id": "wasil-65121",
+    "storage_bucket": "wasil-65121.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:86256742736:android:bbb969f8651e9ff4797c55",
+        "android_client_info": {
+          "package_name": "com.example.store_app"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA2yJOWG3jNFWrj9xSX1Lbv0DNtyAPzoHA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

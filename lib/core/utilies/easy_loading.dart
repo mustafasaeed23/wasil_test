@@ -2,7 +2,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyloading/flutter_easyloading.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:store_app/core/widgets/trego_loading_lottie.dart';
+import 'package:store_app/core/widgets/loading_lottie.dart';
 
 import '../cache_helper/cache_helper.dart';
 
