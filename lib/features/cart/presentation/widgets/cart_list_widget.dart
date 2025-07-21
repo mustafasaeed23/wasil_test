@@ -7,6 +7,7 @@ import 'package:store_app/core/widgets/custom_texts.dart';
 import 'package:store_app/features/cart/cubit/cart_cubit.dart';
 import 'package:store_app/features/cart/cubit/cart_state.dart';
 import 'package:store_app/features/cart/presentation/widgets/cart_widget.dart';
+import 'package:store_app/features/home/domain/entities/product_entity.dart';
 
 class CartListWidget extends StatelessWidget {
   const CartListWidget({super.key});
@@ -16,6 +17,7 @@ class CartListWidget extends StatelessWidget {
     return BlocBuilder<CartCubit, CartState>(
       builder: (context, state) {
         if (state is CartUpdated && state.cartItems.isNotEmpty) {
+          final cartCubit = context.read<CartCubit>();
           final cartItems = state.cartItems;
 
           return Center(
@@ -25,16 +27,13 @@ class CartListWidget extends StatelessWidget {
               padding: EdgeInsets.zero,
               itemBuilder: (context, index) {
                 final product = cartItems[index];
-                final quantity = 1;
+                final quantity = cartCubit.getQuantity(product);
 
                 return CartItemWidget(
                   product: product,
                   quantity: quantity,
                   onQuantityChanged: (newQuantity) {
-                    context.read<CartCubit>().updateQuantity(
-                      product,
-                      newQuantity,
-                    );
+                    cartCubit.updateQuantity(product, newQuantity);
                   },
                 );
               },

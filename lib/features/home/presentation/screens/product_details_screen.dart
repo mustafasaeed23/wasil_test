@@ -44,6 +44,7 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
     double discount = widget.entity.discountPercentage;
     double discountedPrice = originalPrice - (originalPrice * discount / 100);
     double totalPrice = discountedPrice * quantity;
+    print("totalPrice: $totalPrice");
 
     return Scaffold(
       appBar: AppBar(
@@ -172,7 +173,10 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
                   textColor: Colors.black,
                 ),
                 Spacer(),
-                CartQuantityWidget(onQuantityChanged: _onQuantityChanged),
+                CartQuantityWidget(
+                  onQuantityChanged: _onQuantityChanged,
+                  initialQuantity: widget.entity.minimumOrderQuantity,
+                ),
               ],
             ),
 
@@ -198,17 +202,6 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
 
             SizedBox(height: 16.h),
 
-            // Reviews
-            Text16(
-              text: "Reviews",
-              textColor: Colors.black,
-              weight: FontWeight.bold,
-            ),
-            SizedBox(height: 6.h),
-            ReviewslistWidget(widget: widget),
-
-            SizedBox(height: 16.h),
-
             // More product info
             BuildInfoRow(
               label: "Warranty",
@@ -230,7 +223,16 @@ class _ProductDetailsScreenState extends State<ProductDetailsScreen> {
               label: "Min Order Qty",
               value: widget.entity.minimumOrderQuantity.toString(),
             ),
+            SizedBox(height: 16.h),
 
+            // Reviews
+            Text16(
+              text: "Reviews",
+              textColor: Colors.black,
+              weight: FontWeight.bold,
+            ),
+            SizedBox(height: 6.h),
+            ReviewslistWidget(widget: widget),
             SizedBox(height: 20.h),
 
             // Add to cart + price
