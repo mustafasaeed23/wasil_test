@@ -40,11 +40,20 @@ class _RegisterScreenState extends State<RegisterScreen> {
           child: BlocConsumer<AuthBloc, AuthState>(
             listener: (context, state) {
               if (state is AuthSuccess) {
-                ToastManager.showSuccessToast(
-                  "Sign Up",
-                  context,
-                  "Account Created Succssfuly",
-                );
+                if (state.isGuest) {
+                  ToastManager.showInfoToast(
+                    "Sign up",
+                    context,
+                    "you're sign up as a guest now",
+                  );
+                } else {
+                  ToastManager.showSuccessToast(
+                    "Sign Up",
+                    context,
+                    "Account Created Succssfuly",
+                    AppColors.lightGreenColor,
+                  );
+                }
 
                 context.pushReplacementNamed(Routes.homeScreen);
               } else if (state is AuthFailure) {
@@ -201,7 +210,12 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       borderRadius: 15.r,
                       fontWeight: FontWeight.w500,
                       onPressed: () {
-                        context.pushNamed(Routes.homeScreen);
+                        context.read<AuthBloc>().add(GuestLoginEvent());
+                        ToastManager.showInfoToast(
+                          "Sign up",
+                          context,
+                          "you're sign up as a guest now",
+                        );
                       },
                     ),
 

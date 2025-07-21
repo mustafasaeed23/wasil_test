@@ -9,6 +9,7 @@ import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/theming/themes.dart';
 import 'package:store_app/features/auth/bloc/auth_bloc.dart';
 import 'package:store_app/features/auth/data/auth_repository.dart';
+import 'package:store_app/features/cart/cubit/cart_cubit.dart';
 import 'package:store_app/features/home/domain/usecases/products_use_case.dart';
 import 'package:store_app/features/home/presentation/cubit/products_cubit.dart';
 import 'firebase_options.dart';
@@ -43,13 +44,8 @@ class _MyAppState extends State<MyApp> {
       builder:
           (context, child) => MultiBlocProvider(
             providers: [
+              BlocProvider(create: (context) => CartCubit()),
               BlocProvider(create: (context) => AuthBloc(AuthRepository())),
-              BlocProvider(
-                create:
-                    (context) => ProductsCubit(
-                      productsUseCase: getIt.get<ProductsUseCase>(),
-                    )..getAllProducts(),
-              ),
             ],
             child: MaterialApp(
               debugShowCheckedModeBanner: false,

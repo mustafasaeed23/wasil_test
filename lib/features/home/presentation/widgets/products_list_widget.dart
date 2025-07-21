@@ -3,8 +3,11 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:store_app/core/helpers/extensions.dart';
+import 'package:store_app/core/helpers/toast_manager.dart';
 import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/theming/assets.dart';
+import 'package:store_app/core/theming/colors.dart';
+import 'package:store_app/features/cart/cubit/cart_cubit.dart';
 import 'package:store_app/features/home/presentation/cubit/products_cubit.dart';
 import 'package:store_app/features/home/presentation/cubit/products_state.dart';
 import 'package:store_app/features/home/presentation/screens/product_details_screen.dart';
@@ -18,8 +21,8 @@ class ProductsListWidget extends StatelessWidget {
     return BlocBuilder<ProductsCubit, ProductsState>(
       builder: (context, state) {
         if (state is ProductsLoading) {
-          return Padding(
-            padding: const EdgeInsets.symmetric(vertical: 25.0),
+          return SizedBox(
+            height: 450.h,
             child: Center(child: Lottie.asset(Assets.loadingLottie)),
           );
         }
@@ -35,6 +38,18 @@ class ProductsListWidget extends StatelessWidget {
                 productName: productsList[index].title,
                 productDescription: productsList[index].description,
                 productPrice: productsList[index].price.toString(),
+                onCartPressed: () {
+                  context.read<CartCubit>().addToCart(
+                    product: productsList[index],
+                  );
+                  ToastManager.showSuccessToast(
+                    
+                    "Cart",
+                    context,
+                    "Item added to cart",
+                    AppColors.lightGreenColor,
+                  );
+                },
                 onPressed: () {
                   Navigator.push(
                     context,

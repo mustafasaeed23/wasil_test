@@ -47,8 +47,11 @@ class ToastManager {
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
         onCloseButtonTap: (toastItem) => toastification.dismiss(toastItem),
-        onAutoCompleteCompleted: (toastItem) => printDebug('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
+        onAutoCompleteCompleted:
+            (toastItem) =>
+                printDebug('Toast ${toastItem.id} auto complete completed'),
+        onDismissed:
+            (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
       ),
     );
   }
@@ -89,13 +92,21 @@ class ToastManager {
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
         onCloseButtonTap: (toastItem) => toastification.dismiss(toastItem),
-        onAutoCompleteCompleted: (toastItem) => printDebug('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
+        onAutoCompleteCompleted:
+            (toastItem) =>
+                printDebug('Toast ${toastItem.id} auto complete completed'),
+        onDismissed:
+            (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
       ),
     );
   }
 
-  static void showSuccessToast(String message, context, String description) {
+  static void showSuccessToast(
+    String message,
+    context,
+    String description,
+    Color? bgColor,
+  ) {
     toastification.dismissAll();
     toastification.show(
       context: context,
@@ -114,11 +125,11 @@ class ToastManager {
         maxLines: 3,
       ),
       // icon: SvgPicture.asset(Assets.checkIcon, color: Colors.white, height: 24.r),
-      alignment: Alignment.topCenter,
+      alignment: Alignment.bottomCenter,
       direction: CacheHelper.isEn ? TextDirection.ltr : TextDirection.rtl,
       animationDuration: const Duration(milliseconds: 500),
       primaryColor: Colors.white,
-      backgroundColor: AppColors.purpleColor,
+      backgroundColor: bgColor ?? AppColors.lightGreenColor,
       foregroundColor: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
       margin: EdgeInsets.symmetric(horizontal: 30.w, vertical: 8.h),
@@ -132,8 +143,11 @@ class ToastManager {
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
         onCloseButtonTap: (toastItem) => toastification.dismiss(toastItem),
-        onAutoCompleteCompleted: (toastItem) => printDebug('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
+        onAutoCompleteCompleted:
+            (toastItem) =>
+                printDebug('Toast ${toastItem.id} auto complete completed'),
+        onDismissed:
+            (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
       ),
     );
   }
@@ -179,8 +193,11 @@ class ToastManager {
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
         onCloseButtonTap: (toastItem) => toastification.dismiss(toastItem),
-        onAutoCompleteCompleted: (toastItem) => printDebug('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
+        onAutoCompleteCompleted:
+            (toastItem) =>
+                printDebug('Toast ${toastItem.id} auto complete completed'),
+        onDismissed:
+            (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
       ),
     );
   }
@@ -222,8 +239,11 @@ class ToastManager {
       callbacks: ToastificationCallbacks(
         onTap: (toastItem) => printDebug('Toast ${toastItem.id} tapped'),
         onCloseButtonTap: (toastItem) => toastification.dismiss(toastItem),
-        onAutoCompleteCompleted: (toastItem) => printDebug('Toast ${toastItem.id} auto complete completed'),
-        onDismissed: (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
+        onAutoCompleteCompleted:
+            (toastItem) =>
+                printDebug('Toast ${toastItem.id} auto complete completed'),
+        onDismissed:
+            (toastItem) => printDebug('Toast ${toastItem.id} dismissed'),
       ),
     );
   }

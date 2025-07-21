@@ -5,28 +5,35 @@ import 'package:store_app/core/widgets/custom_texts.dart';
 
 class CartQuantityWidget extends StatefulWidget {
   final ValueChanged<int> onQuantityChanged;
+  final int initialQuantity;
 
-  const CartQuantityWidget({super.key, required this.onQuantityChanged});
+  const CartQuantityWidget({
+    super.key,
+    required this.onQuantityChanged,
+    this.initialQuantity = 1,
+  });
 
   @override
   State<CartQuantityWidget> createState() => _CartQuantityWidgetState();
 }
 
 class _CartQuantityWidgetState extends State<CartQuantityWidget> {
-  int quantity = 1;
+  late int quantity;
+
+  @override
+  void initState() {
+    super.initState();
+    quantity = widget.initialQuantity;
+  }
 
   void _increment() {
-    setState(() {
-      quantity++;
-    });
+    setState(() => quantity++);
     widget.onQuantityChanged(quantity);
   }
 
   void _decrement() {
     if (quantity > 1) {
-      setState(() {
-        quantity--;
-      });
+      setState(() => quantity--);
       widget.onQuantityChanged(quantity);
     }
   }
@@ -45,16 +52,19 @@ class _CartQuantityWidgetState extends State<CartQuantityWidget> {
         children: [
           GestureDetector(
             onTap: _increment,
-            child: Icon(Icons.add_circle, color: Colors.white),
+            child: const Icon(Icons.add_circle, color: Colors.white),
           ),
-          Text12(text: "$quantity"),
+          Text12(
+            text: "$quantity",
+            textColor: Colors.white,
+            weight: FontWeight.bold,
+          ),
           GestureDetector(
             onTap: _decrement,
-            child: Icon(Icons.remove_circle, color: Colors.white),
+            child: const Icon(Icons.remove_circle, color: Colors.white),
           ),
         ],
       ),
     );
   }
 }
-

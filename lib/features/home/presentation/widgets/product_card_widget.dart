@@ -12,12 +12,14 @@ class ProductCardWidget extends StatelessWidget {
     required this.productDescription,
     required this.productPrice,
     this.onPressed,
+    this.onCartPressed,
   });
   final String productImage;
   final String productName;
   final String productDescription;
   final String productPrice;
   final void Function()? onPressed;
+  final void Function()? onCartPressed;
 
   @override
   Widget build(BuildContext context) {
@@ -94,7 +96,7 @@ class ProductCardWidget extends StatelessWidget {
                   alignment: Alignment.bottomRight,
                   child: CustomButton(
                     text: "Add to cart",
-                    onPressed: () {},
+                    onPressed: onCartPressed,
                     height: 40.h,
                     fontSize: 14.sp,
                     width: double.infinity,

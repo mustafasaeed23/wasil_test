@@ -9,6 +9,9 @@ class Assets {
   static const String loadingLottie = "assets/animations/loading_gray.json";
   static const String registerLottie =
       "assets/animations/register_animations.json";
+  static const String cartEmptyLottie =
+      "assets/animations/Cart Empty State.json";
+  static const String successLottie = "assets/animations/Success.json";
   // Failure Images
   static const String offlineFailureImage =
       "assets/images/offlineFailureImage.svg";

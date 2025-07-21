@@ -39,5 +39,15 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       await authRepository.signOut();
       emit(AuthInitial());
     });
+
+    on<GuestLoginEvent>((event, emit) async {
+      emit(AuthLoading());
+      try {
+        final user = await authRepository.signInAnonymously();
+        emit(AuthSuccess(user!, isGuest: true));
+      } catch (e) {
+        emit(AuthFailure("Failed to login as guest: ${e.toString()}"));
+      }
+    });
   }
 }
