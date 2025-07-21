@@ -92,7 +92,9 @@ class _CartItemWidgetState extends State<CartItemWidget> {
                 padding: EdgeInsets.symmetric(vertical: 8.h, horizontal: 10.w),
                 child: InkWell(
                   onTap: () {
-                    context.read<CartCubit>().removeFromCart(product: widget.product);
+                    context.read<CartCubit>().removeFromCart(
+                      product: widget.product,
+                    );
                   },
                   child: SvgPicture.asset(Assets.deleteIcon),
                 ),
@@ -103,7 +105,7 @@ class _CartItemWidgetState extends State<CartItemWidget> {
             bottom: 10.h,
             right: 10.w,
             child: CartQuantityWidget(
-              initialQuantity: quantity,
+              initialQuantity: widget.product.minimumOrderQuantity,
               onQuantityChanged: _onQuantityUpdated,
             ),
           ),
@@ -112,4 +114,3 @@ class _CartItemWidgetState extends State<CartItemWidget> {
     );
   }
 }
-

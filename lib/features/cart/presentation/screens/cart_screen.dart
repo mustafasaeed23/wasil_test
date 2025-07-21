@@ -3,7 +3,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:lottie/lottie.dart';
 import 'package:store_app/core/helpers/extensions.dart';
-import 'package:store_app/core/routing/routes.dart';
 import 'package:store_app/core/theming/assets.dart';
 import 'package:store_app/core/theming/colors.dart';
 import 'package:store_app/core/utilies/guest_alert_dialog.dart';
@@ -14,7 +13,6 @@ import 'package:store_app/features/auth/bloc/auth_state.dart';
 import 'package:store_app/features/cart/cubit/cart_cubit.dart';
 import 'package:store_app/features/cart/cubit/cart_state.dart';
 import 'package:store_app/features/cart/presentation/widgets/cart_list_widget.dart';
-import 'package:store_app/features/home/domain/entities/product_entity.dart';
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -39,16 +37,12 @@ class CartScreen extends StatelessWidget {
       body: BlocBuilder<CartCubit, CartState>(
         builder: (context, state) {
           final cartCubit = context.read<CartCubit>();
-          final cartItems = cartCubit.cartItems;
+          final cartMap = cartCubit.cartMap;
 
-          double totalPrice = cartItems.fold(
-            0,
-            (sum, item) => sum + (item.price ?? 0),
-          );
-
-          if (cartItems.isEmpty) {
+          if (cartMap.isEmpty) {
             return Center(
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Lottie.asset(Assets.cartEmptyLottie, height: 300.h),
                   SizedBox(height: 20.h),
@@ -61,6 +55,14 @@ class CartScreen extends StatelessWidget {
               ),
             );
           }
+          double totalPrice = cartMap.entries.fold(0.0, (sum, entry) {
+            final product = entry.key;
+            final quantity = entry.value;
+            final price = product.price ?? 0;
+            final discount = product.discountPercentage ?? 0;
+            final discountedPrice = price - (price * discount / 100);
+            return sum + (discountedPrice * quantity);
+          });
 
           return Column(
             children: [
@@ -88,7 +90,7 @@ class CartScreen extends StatelessWidget {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Total price
+                    // Total price display
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -108,10 +110,8 @@ class CartScreen extends StatelessWidget {
                     // Checkout button
                     ElevatedButton(
                       onPressed: () {
-                        final isGuest =
-                            context.read<AuthBloc>().state is AuthSuccess &&
-                            (context.read<AuthBloc>().state as AuthSuccess)
-                                .isGuest;
+                        final state = context.read<AuthBloc>().state;
+                        final isGuest = state is AuthSuccess && state.isGuest;
 
                         if (isGuest) {
                           guestAlertDialog(context);
@@ -150,8 +150,4 @@ class CartScreen extends StatelessWidget {
       ),
     );
   }
-
- 
-
-
 }
